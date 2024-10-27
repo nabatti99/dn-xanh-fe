@@ -20,7 +20,7 @@ register();
 export const Root = () => {
     return (
         <MotionConfig transition={{ duration: 0.3 }}>
-            <Theme accentColor="blue">
+            <Theme accentColor="green">
                 <Flex direction={"row"} style={{ height: "100vh" }}>
                     {/* Navigation bar */}
                     <Navigator flexGrow="0" />

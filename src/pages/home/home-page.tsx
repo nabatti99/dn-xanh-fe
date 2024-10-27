@@ -1,21 +1,34 @@
 import { Seo } from "@global/components";
-import { Box, Container, Flex, Section } from "@radix-ui/themes";
+import { Flex, Section } from "@radix-ui/themes";
 import { useEffect } from "react";
-import { Welcome } from "./components";
+import { Head } from "./components/head";
+import { Control } from "./components/control";
+import { Bottom } from "./components/bottom";
 import { HomePageProps } from "./type";
+import MapPng from "./images/Map.png";
 
 export const HomePage = ({}: HomePageProps) => {
     useEffect(() => window.scrollTo({ behavior: "smooth", top: 0 }));
 
     return (
         <>
-            <Flex direction="column" align="stretch" gap="5">
+            <Flex
+                className=""
+                direction="column"
+                align="stretch"
+                gap="3"
+                style={{
+                    backgroundImage: `url(${MapPng})`, // Chèn ảnh MapPng vào đây
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    height: "100vh",
+                }}
+            >
                 <Section size="1" pb="0">
-                    <Box py="9">
-                        <Container>
-                            <Welcome />
-                        </Container>
-                    </Box>
+                    <Head width="1072" height="108" />
+                    <Control />
+                    <Bottom width="1072" height="108" />
                 </Section>
             </Flex>
 
