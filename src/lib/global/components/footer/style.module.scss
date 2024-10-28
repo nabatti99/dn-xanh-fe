@@ -4,12 +4,12 @@
 	&-top {
 		.introduction {
 			.logo {
-				& > img {
-					width: auto !important;
+				&>img {
+					width : auto !important;
 					height: 3rem !important;
 				}
 
-				& > span.name {
+				&>span.name {
 					color: var(--accent-2);
 				}
 			}
@@ -22,7 +22,7 @@
 		.navigation {
 			.header {
 				font-weight: 600;
-				color: var(--accent-9);
+				color      : var(--accent-9);
 			}
 
 			.item {

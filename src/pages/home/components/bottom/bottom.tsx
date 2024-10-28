@@ -6,10 +6,17 @@ import recycledTrash from "./images/trash/recycledTrash.png";
 import realTrashDemo from "./images/trash/realTrashDemo.png";
 import style from "./style.module.scss";
 import { Icon } from "@components";
+import { useState } from "react";
 
 export const Bottom = ({ ...props }: BottomProps) => {
+    const [index, setIndex] = useState(1);
+
+    const changeIndex = (index: number) => {
+        setIndex(index);
+    };
+
     return (
-        <Flex direction="column" position="fixed" bottom="2" right="3" left="15vw" style={{ margin: "0 80px" }}>
+        <Flex direction="column" position="fixed" bottom="2" width="69vw" style={{ margin: "0 80px" }}>
             <Flex justify="between" align="end" gap="5" style={{ marginBottom: "10px" }}>
                 <Button style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
                     <Icon ri="ri-corner-up-right-line"></Icon> Dẫn đường
@@ -31,17 +38,17 @@ export const Bottom = ({ ...props }: BottomProps) => {
                 }}
             >
                 <Flex align="stretch" gap="5" style={{ marginLeft: "20px", marginBottom: "-14px" }}>
-                    <Flex direction="column">
+                    <Flex direction="column" onClick={() => changeIndex(1)} style={{ cursor: "pointer" }}>
                         <Text weight="bold">Tình Trạng</Text>
-                        <div style={{ border: "1.5px solid green", zIndex: "1" }}></div>
+                        {index === 1 && <div style={{ border: "1.5px solid green", zIndex: "1" }}></div>}
                     </Flex>
-                    <Flex direction="column">
+                    <Flex direction="column" onClick={() => changeIndex(2)} style={{ cursor: "pointer" }}>
                         <Text weight="bold">Lịch sử thu gom rác</Text>
-                        <div hidden style={{ border: "1.5px solid green", zIndex: "1" }}></div>
+                        {index === 2 && <div style={{ border: "1.5px solid green", zIndex: "1" }}></div>}
                     </Flex>
-                    <Flex direction="column">
+                    <Flex direction="column" onClick={() => changeIndex(3)} style={{ cursor: "pointer" }}>
                         <Text weight="bold">Thông tin</Text>
-                        <div hidden style={{ border: "1.5px solid green", zIndex: "1" }}></div>
+                        {index === 3 && <div style={{ border: "1.5px solid green", zIndex: "1" }}></div>}
                     </Flex>
                 </Flex>
                 <div style={{ border: "1px solid silver", margin: "0 10px" }}></div>

@@ -8,12 +8,16 @@ import { analysisRoute } from "@pages/analysis";
 import { newsRoute } from "@pages/news";
 import { reportRoute } from "@pages/reports";
 import { infoRoute } from "@pages/info";
+import { loginRoute } from "@pages/login";
+import { pointRoute } from "@pages/points";
+import { activityRoute } from "@pages/activities";
+import { membersRoute } from "@pages/members";
 
 export const router = createBrowserRouter([
     {
         path: ROOT,
         element: <Root />,
         errorElement: <ErrorPage />,
-        children: [homeRoute, analysisRoute, newsRoute, reportRoute, infoRoute],
+        children: [homeRoute, analysisRoute, newsRoute, reportRoute, infoRoute, loginRoute, pointRoute, activityRoute, membersRoute],
     },
 ]);

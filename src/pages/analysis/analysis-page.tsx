@@ -1,7 +1,7 @@
 import { Seo } from "@global/components";
 import { Container, Flex, Heading, Section, Text } from "@radix-ui/themes";
 import { SortedWaste } from "./components/sortedWaste";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnalysisPageProps } from "./type";
 import { Landfill } from "./components/landfill";
 import { Point } from "./components/point";
@@ -10,6 +10,12 @@ import { Chart } from "./components/chart";
 
 export const AnalysisPage = ({}: AnalysisPageProps) => {
     useEffect(() => window.scrollTo({ behavior: "smooth", top: 0 }));
+
+    const [index, setIndex] = useState(1);
+
+    const changeIndex = (index: number) => {
+        setIndex(index);
+    };
 
     return (
         <>
@@ -23,12 +29,33 @@ export const AnalysisPage = ({}: AnalysisPageProps) => {
                     <Flex direction="column">
                         <Flex gap="5">
                             <Flex direction="column" gap="6">
-                                <SortedWaste width="17vw" height="17vh" />
-                                <Landfill width="17vw" height="17vh" />
-                                <Point width="17vw" height="17vh" />
+                                <SortedWaste
+                                    width="17vw"
+                                    height="17vh"
+                                    onClick={() => {
+                                        changeIndex(1);
+                                    }}
+                                    tabIndex={index}
+                                />
+                                <Landfill
+                                    width="17vw"
+                                    height="17vh"
+                                    onClick={() => {
+                                        changeIndex(2);
+                                    }}
+                                    tabIndex={index}
+                                />
+                                <Point
+                                    width="17vw"
+                                    height="17vh"
+                                    onClick={() => {
+                                        changeIndex(3);
+                                    }}
+                                    tabIndex={index}
+                                />
                             </Flex>
                             <Flex style={{ justifyContent: "right" }}>
-                                <Chart />
+                                <Chart tabIndex={index} />
                             </Flex>
                         </Flex>
                         <Bottom />

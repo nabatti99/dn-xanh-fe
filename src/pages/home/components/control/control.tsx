@@ -30,7 +30,7 @@ export const Control = ({ ...props }: ControlProps) => {
                 justify="center"
                 style={{ cursor: "pointer", height: "7vh", width: "3.5vw", borderRadius: "50px", background: "white", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
             >
-                <Icon ri="ri-map-pin-range-line" size="6" />
+                <Icon ri="ri-focus-2-line" size="6" />
             </Flex>
             <Flex
                 align="center"
