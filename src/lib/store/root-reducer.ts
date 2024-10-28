@@ -6,12 +6,14 @@ import { localStorageReducer } from "@services/local-storage";
 import { notificationReducer } from "@services/notification";
 import { responsiveReducer } from "@services/responsive";
 import { chatReducer } from "@pages/chat-demo/redux";
+import { cookieReducer } from "@services/cookie";
 
 // Combine all service reducers
 export const rootReducer = {
     globalStates: globalStatesReducer,
     notification: notificationReducer,
     localStorage: localStorageReducer,
+    cookie: cookieReducer,
     font: fontReducer,
     language: languageReducer,
     loading: loadingReducer,

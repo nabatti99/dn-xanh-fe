@@ -4245,6 +4245,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/js-cookie@npm:^3":
+  version: 3.0.6
+  resolution: "@types/js-cookie@npm:3.0.6"
+  checksum: 10c0/173afaf5ea9d86c22395b9d2a00b6adb0006dcfef165d6dcb0395cdc32f5a5dcf9c3c60f97194119963a15849b8f85121e1ae730b03e40bc0c29b84396ba22f9
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.4, @types/json-schema@npm:^7.0.5, @types/json-schema@npm:^7.0.8, @types/json-schema@npm:^7.0.9":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
@@ -10070,6 +10077,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-cookie@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 10c0/04a0e560407b4489daac3a63e231d35f4e86f78bff9d792011391b49c59f721b513411cd75714c418049c8dc9750b20fcddad1ca5a2ca616c3aca4874cce5b3a
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -14482,6 +14496,7 @@ __metadata:
     "@tanstack/react-query-devtools": "npm:^5.32.0"
     "@types/fontfaceobserver": "npm:^2.1.3"
     "@types/jest": "npm:^29.5.12"
+    "@types/js-cookie": "npm:^3"
     "@types/lodash.debounce": "npm:^4.0.9"
     "@types/node": "npm:^20.12.7"
     "@types/react": "npm:^18.3.1"
@@ -14494,6 +14509,7 @@ __metadata:
     framer-motion: "npm:^11.1.7"
     global: "npm:^4.4.0"
     husky: "npm:^9.0.11"
+    js-cookie: "npm:^3.0.5"
     lint-staged: "npm:^15.2.2"
     lodash.debounce: "npm:^4.0.8"
     prettier: "npm:^3.2.5"

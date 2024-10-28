@@ -2,10 +2,10 @@ import { Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import cls from "classnames";
 import { NavLink, useLocation } from "react-router-dom";
 import { NavigatorProps } from "./type";
-import Logo from "../../images/logo/logoDNxanh.png";
 import LogoDemo from "../../images/logo/logoDNxanhDemo.jpg";
 import styles from "./style.module.scss";
 import { Icon } from "@components";
+import { useAppSelector } from "@store";
 
 const navigationItems = [
     {
@@ -47,8 +47,9 @@ const navigationItems = [
 
 export const Navigator = ({ className, ...props }: NavigatorProps) => {
     const location = useLocation();
+    const user = useAppSelector((state) => state.globalStates.user);
 
-    // Kiểm tra nếu URL là /login thì không hiển thị Navigator
+    // Check if the current path is /login, then not render the navigator
     if (location.pathname === "/login") return null;
 
     return (
@@ -102,14 +103,25 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
                         </Text>
                     </Flex>
                     <div style={{ border: "1px solid gray", margin: "2vh 0" }}></div>
-                    <Flex direction="column">
-                        <NavLink to="/login">
-                            <Button>Đăng nhập ngay!</Button>
-                        </NavLink>
-                        <Text color="gray" mt="3">
-                            Cộng đồng đã tích <span style={{ color: "green", fontWeight: "600" }}>120k điểm xanh</span>. <br /> Còn bạn thì sao?
-                        </Text>
-                    </Flex>
+                    {user ? (
+                        <Flex direction="column">
+                            <NavLink to="/login">
+                                <Button>Đăng nhập ngay!</Button>
+                            </NavLink>
+                            <Text color="gray" mt="3">
+                                Cộng đồng đã tích <span style={{ color: "green", fontWeight: "600" }}>120k điểm xanh</span>. <br /> Còn bạn thì sao?
+                            </Text>
+                        </Flex>
+                    ) : (
+                        <Flex direction="column">
+                            <NavLink to="/login">
+                                <Button>Đăng nhập ngay!</Button>
+                            </NavLink>
+                            <Text color="gray" mt="3">
+                                Cộng đồng đã tích <span style={{ color: "green", fontWeight: "600" }}>120k điểm xanh</span>. <br /> Còn bạn thì sao?
+                            </Text>
+                        </Flex>
+                    )}
                 </Flex>
             </Flex>
         </Container>
