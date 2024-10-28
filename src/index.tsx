@@ -13,19 +13,19 @@ import { RouterProvider } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<QueryClientProvider client={queryClient}>
-				<LanguageProvider>
-					<FontProvider>
-						<ResponsiveProvider>
-							<RouterProvider router={router} />
-						</ResponsiveProvider>
-					</FontProvider>
-				</LanguageProvider>
+    <React.StrictMode>
+        <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+                <LanguageProvider>
+                    <FontProvider>
+                        <ResponsiveProvider>
+                            <RouterProvider router={router} />
+                        </ResponsiveProvider>
+                    </FontProvider>
+                </LanguageProvider>
 
-				<ReactQueryDevtools />
-			</QueryClientProvider>
-		</Provider>
-	</React.StrictMode>
+                {/* <ReactQueryDevtools  /> */}
+            </QueryClientProvider>
+        </Provider>
+    </React.StrictMode>
 );

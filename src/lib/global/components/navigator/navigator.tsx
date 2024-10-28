@@ -1,11 +1,17 @@
-import { Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
+import { useApiMe } from "@api/http-request/requests/api-server/hooks/user";
+import { Icon } from "@components";
+import { Avatar, Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
+import { pushErrorNotification } from "@services/notification";
+import { useAppDispatch } from "@store";
+import { stringifyRequestError } from "@utilities";
 import cls from "classnames";
-import { NavLink, useLocation } from "react-router-dom";
-import { NavigatorProps } from "./type";
+import { useEffect } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import LogoDemo from "../../images/logo/logoDNxanhDemo.jpg";
 import styles from "./style.module.scss";
-import { Icon } from "@components";
-import { useAppSelector } from "@store";
+import { NavigatorProps } from "./type";
+import { removeAccessToken } from "@services/cookie";
+import { setUser } from "@services/global-states";
 
 const navigationItems = [
     {
@@ -45,17 +51,59 @@ const navigationItems = [
     },
 ];
 
-export const Navigator = ({ className, ...props }: NavigatorProps) => {
-    const location = useLocation();
-    const user = useAppSelector((state) => state.globalStates.user);
+const excludeNavigator = ["/claim-reward"];
 
-    // Check if the current path is /login, then not render the navigator
-    if (location.pathname === "/login") return null;
+export const Navigator = ({ className, ...props }: NavigatorProps) => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const isAuthPage = ["/login", "/register"].includes(location.pathname);
+
+    const { mutateAsync, data: user } = useApiMe();
+
+    useEffect(() => {
+        if (isAuthPage) return;
+
+        mutateAsync()
+            .then((user) => {
+                dispatch(setUser(user));
+            })
+            .catch((error) => {
+                const status = error.response?.status;
+
+                if (status === 401) {
+                    dispatch(removeAccessToken());
+
+                    navigate("/login", {
+                        replace: true,
+                        state: {
+                            redirectUrl: `${location.pathname}${location.search}`,
+                        },
+                    });
+                    return;
+                }
+
+                dispatch(
+                    pushErrorNotification({
+                        message: "Không thể lấy thông tin người dùng",
+                        description: stringifyRequestError(error),
+                    })
+                );
+            });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthPage]);
+
+    // Check not render the navigator case
+    if (isAuthPage) return null;
+    if (excludeNavigator.includes(location.pathname)) return null;
 
     return (
         <Container className={cls(styles["container"], className)} {...props}>
             <Flex direction="column" align="stretch" gap="9">
-                <Flex direction="column" justify="center" align="stretch" gap="1" wrap="wrap">
+                <Flex direction="column" justify="center" align="stretch" gap="6" wrap="wrap">
                     <Flex justify="center" align="center">
                         <div style={{ borderRadius: "5px", backgroundColor: "white", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", padding: "2px" }}>
                             <div
@@ -74,16 +122,19 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
                             ĐÀ NẴNG XANH
                         </Heading>
                     </Flex>
-                    {navigationItems.map(({ title, icon, to }) => (
-                        <NavLink key={title} to={to} className={styles["nav-link"]}>
-                            {({ isActive }) => (
-                                <Flex justify="start" align="center" className={cls(styles["text"], isActive && styles["active"])}>
-                                    <Icon ri={icon} className={cls(styles["icon"], isActive && styles["active"])} />
-                                    {title}
-                                </Flex>
-                            )}
-                        </NavLink>
-                    ))}
+
+                    <Flex direction="column">
+                        {navigationItems.map(({ title, icon, to }) => (
+                            <NavLink key={title} to={to} className={styles["nav-link"]}>
+                                {({ isActive }) => (
+                                    <Flex justify="start" align="center" className={cls(styles["text"], isActive && styles["active"])}>
+                                        <Icon ri={icon} className={cls(styles["icon"], isActive && styles["active"])} />
+                                        {title}
+                                    </Flex>
+                                )}
+                            </NavLink>
+                        ))}
+                    </Flex>
                 </Flex>
                 <Flex direction="column">
                     <Flex direction="column" ml="4" style={{ fontWeight: "600" }}>
@@ -104,12 +155,10 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
                     </Flex>
                     <div style={{ border: "1px solid gray", margin: "2vh 0" }}></div>
                     {user ? (
-                        <Flex direction="column">
-                            <NavLink to="/login">
-                                <Button>Đăng nhập ngay!</Button>
-                            </NavLink>
-                            <Text color="gray" mt="3">
-                                Cộng đồng đã tích <span style={{ color: "green", fontWeight: "600" }}>120k điểm xanh</span>. <br /> Còn bạn thì sao?
+                        <Flex align="center" gap="4">
+                            <Avatar fallback={user.firstName[0]} radius="full" />
+                            <Text color="gray" weight="bold">
+                                Xin chào, <span style={{ color: "green", fontWeight: "600" }}>{user.firstName}</span>!
                             </Text>
                         </Flex>
                     ) : (

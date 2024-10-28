@@ -6,7 +6,7 @@ import { Icon } from "@components";
 
 export const Control = ({ ...props }: ControlProps) => {
     return (
-        <Flex position="absolute" right="2" direction="column" align="stretch" gap="3" {...props} style={{ height: "50vh", width: "5vw", margin: "5vh 0" }}>
+        <Flex position="absolute" right="2" direction="column" align="stretch" gap="3" {...props} style={{ height: "50vh", width: "5vw", top: "16vh", right: "0" }}>
             <Flex direction="column" style={{ height: "14vh", width: "3.5vw", borderRadius: "20px", background: "white", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
                 {/* Dấu cộng */}
                 <Flex align="center" justify="center" style={{ height: "50%", width: "100%", cursor: "pointer" }}>

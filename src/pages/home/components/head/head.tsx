@@ -7,10 +7,10 @@ export const Head = ({ ...props }: HeadProps) => {
     return (
         <Flex
             direction="column"
-            align="stretch"
+            align="center"
             gap="3"
             {...props}
-            style={{ backgroundColor: "white", padding: "10px 20px", margin: "0 80px", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
+            style={{ backgroundColor: "white", padding: "10px 20px", margin: "0 80px", marginTop: "1rem", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
         >
             <Text size="2" align="center" style={{ alignSelf: "center", maxWidth: "48rem", color: "gray" }}>
                 Khối lượng rác thải đã được phân loại trong 30 ngày qua

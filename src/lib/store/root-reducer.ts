@@ -1,12 +1,12 @@
-import { globalStatesReducer } from "@services/global-states";
+import { homeReducer } from "@pages/home/redux";
+import { cookieReducer } from "@services/cookie";
 import { fontReducer } from "@services/font";
+import { globalStatesReducer } from "@services/global-states";
 import { languageReducer } from "@services/language";
 import { loadingReducer } from "@services/loading";
 import { localStorageReducer } from "@services/local-storage";
 import { notificationReducer } from "@services/notification";
 import { responsiveReducer } from "@services/responsive";
-import { chatReducer } from "@pages/chat-demo/redux";
-import { cookieReducer } from "@services/cookie";
 
 // Combine all service reducers
 export const rootReducer = {
@@ -20,5 +20,5 @@ export const rootReducer = {
     responsive: responsiveReducer,
 
     // Custom reducers
-    chat: chatReducer,
+    home: homeReducer,
 };

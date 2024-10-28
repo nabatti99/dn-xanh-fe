@@ -11,6 +11,9 @@ import "remixicon/fonts/remixicon.css";
 // Radix UI
 import "@radix-ui/themes/styles.css";
 
+// Leaflet
+import "leaflet/dist/leaflet.css";
+
 // Global style
 import "./style/global.style.css";
 

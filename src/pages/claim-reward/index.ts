@@ -1,3 +1,3 @@
 export * from "./constants";
-export * from "./chat";
+export * from "./claim-reward";
 export * from "./route";

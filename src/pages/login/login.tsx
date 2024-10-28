@@ -1,4 +1,4 @@
-import { useApiLogin } from "@api/http-request/requests/api-server/hooks/blog";
+import { useApiLogin } from "@api/http-request/requests/api-server/hooks/user";
 import { Icon } from "@components";
 import { Seo } from "@global/components";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
@@ -11,7 +11,7 @@ import BannerImage from "./images/bgDragon.png";
 import Logo from "./images/logo/logoDNxanhDemo.jpg";
 import { LoginFormInput, LoginPageProps } from "./type";
 import { setAccessToken } from "@services/cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // import IconQuestion from "../../images/icons/iconQuestion.png";
 // import IconSettings from "../../images/icons/iconSettings.png";
@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 export const LoginPage = ({}: LoginPageProps) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { state } = useLocation();
 
     const { accessToken } = useAppSelector((state) => state.cookie);
 
@@ -27,10 +28,12 @@ export const LoginPage = ({}: LoginPageProps) => {
     const { mutateAsync, isPending } = useApiLogin();
 
     useEffect(() => {
-        if (accessToken)
-            navigate("/", {
+        if (accessToken) {
+            const redirectUrl = state?.redirectUrl || "/";
+            navigate(redirectUrl, {
                 replace: true,
             });
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken]);
