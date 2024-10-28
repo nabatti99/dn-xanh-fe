@@ -56,13 +56,13 @@ export const ClaimRewardPage = ({}: ClaimRewardPageProps) => {
                 ) : (
                     apiResponse && (
                         <Flex position="relative" direction="column" align="center" gap="6" className={styles["content"]}>
-                            <Heading as="h2" className={styles["title"]}>
+                            <Heading as="h2" align="center" className={styles["title"]}>
                                 CHÚC MỪNG BẠN ĐÃ TÍCH ĐƯỢC
                             </Heading>
-                            <Heading as="h1" className={styles["green-point"]}>
+                            <Heading as="h1" align="center" className={styles["green-point"]}>
                                 {apiResponse.greenPoint}
                             </Heading>
-                            <Heading as="h2" className={styles["subtitle"]}>
+                            <Heading as="h2" align="center" className={styles["subtitle"]}>
                                 ĐIỂM XANH
                             </Heading>
 
