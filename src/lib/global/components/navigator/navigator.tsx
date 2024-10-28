@@ -11,7 +11,8 @@ import LogoDemo from "../../images/logo/logoDNxanhDemo.jpg";
 import styles from "./style.module.scss";
 import { NavigatorProps } from "./type";
 import { removeAccessToken } from "@services/cookie";
-import { setUser } from "@services/global-states";
+import { removeUser, setUser } from "@services/global-states";
+import { Role } from "@api/http-request/requests/api-server/models/user";
 
 const navigationItems = [
     {
@@ -61,7 +62,7 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
 
     const isAuthPage = ["/login", "/register"].includes(location.pathname);
 
-    const { mutateAsync, data: user } = useApiMe();
+    const { mutateAsync, data: user, isPending } = useApiMe();
 
     useEffect(() => {
         if (isAuthPage) return;
@@ -75,6 +76,7 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
 
                 if (status === 401) {
                     dispatch(removeAccessToken());
+                    dispatch(removeUser());
 
                     navigate("/login", {
                         replace: true,
@@ -99,6 +101,17 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
     // Check not render the navigator case
     if (isAuthPage) return null;
     if (excludeNavigator.includes(location.pathname)) return null;
+
+    const handleLogout = () => {
+        dispatch(removeAccessToken());
+        dispatch(removeUser());
+        navigate("/login", {
+            replace: true,
+            state: {
+                redirectUrl: `${location.pathname}${location.search}`,
+            },
+        });
+    };
 
     return (
         <Container className={cls(styles["container"], className)} {...props}>
@@ -138,12 +151,15 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
                 </Flex>
                 <Flex direction="column">
                     <Flex direction="column" ml="4" style={{ fontWeight: "600" }}>
-                        <NavLink to="/members" style={{ color: "red", textDecoration: "none" }}>
-                            <Text size="2" style={{ cursor: "pointer" }}>
-                                <Icon ri="ri-emotion-happy-line" size="3" style={{ marginRight: "2vw", background: "#FEE4E2", padding: "5px", borderRadius: "5px" }} />
-                                Cộng tác viên
-                            </Text>
-                        </NavLink>
+                        {user && [Role.ADMIN, Role.CONTRIBUTOR].includes(user.role) && (
+                            <NavLink to="/members" style={{ color: "red", textDecoration: "none" }}>
+                                <Text size="2" style={{ cursor: "pointer" }}>
+                                    <Icon ri="ri-emotion-happy-line" size="3" style={{ marginRight: "2vw", background: "#FEE4E2", padding: "5px", borderRadius: "5px" }} />
+                                    Cộng tác viên
+                                </Text>
+                            </NavLink>
+                        )}
+
                         <Text size="2" style={{ cursor: "pointer" }}>
                             <Icon ri="ri-lifebuoy-line" size="3" style={{ marginRight: "2vw", padding: "5px" }} />
                             Trợ giúp
@@ -154,14 +170,21 @@ export const Navigator = ({ className, ...props }: NavigatorProps) => {
                         </Text>
                     </Flex>
                     <div style={{ border: "1px solid gray", margin: "2vh 0" }}></div>
-                    {user ? (
-                        <Flex align="center" gap="4">
-                            <Avatar fallback={user.firstName[0]} radius="full" />
-                            <Text color="gray" weight="bold">
-                                Xin chào, <span style={{ color: "green", fontWeight: "600" }}>{user.firstName}</span>!
-                            </Text>
+                    {user && (
+                        <Flex direction="column" gap="4">
+                            <Flex align="center" gap="4">
+                                <Avatar fallback={user.firstName[0]} radius="full" />
+                                <Text color="gray" weight="bold">
+                                    Xin chào, <span style={{ color: "green", fontWeight: "600" }}>{user.firstName}</span>!
+                                </Text>
+                            </Flex>
+                            <Button variant="soft" onClick={handleLogout}>
+                                Đăng xuất
+                            </Button>
                         </Flex>
-                    ) : (
+                    )}
+
+                    {!isPending && !user && (
                         <Flex direction="column">
                             <NavLink to="/login">
                                 <Button>Đăng nhập ngay!</Button>

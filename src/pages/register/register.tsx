@@ -1,4 +1,3 @@
-import { useApiLogin } from "@api/http-request/requests/api-server/hooks/user";
 import { Icon } from "@components";
 import { Seo } from "@global/components";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
@@ -9,23 +8,21 @@ import { useEffect, useState } from "react";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import BannerImage from "./images/bgDragon.png";
 import Logo from "./images/logo/logoDNxanhDemo.jpg";
-import { LoginFormInput, LoginPageProps } from "./type";
 import { setAccessToken } from "@services/cookie";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { RegisterFormInput, RegisterPageProps } from "./type";
+import { useApiRegister } from "@api/http-request/requests/api-server/hooks/user";
 
-// import IconQuestion from "../../images/icons/iconQuestion.png";
-// import IconSettings from "../../images/icons/iconSettings.png";
-
-export const LoginPage = ({}: LoginPageProps) => {
+export const RegisterPage = ({}: RegisterPageProps) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { state } = useLocation();
 
     const { accessToken } = useAppSelector((state) => state.cookie);
 
-    const { register, handleSubmit } = useForm<LoginFormInput>();
+    const { register, handleSubmit } = useForm<RegisterFormInput>();
 
-    const { mutateAsync, isPending } = useApiLogin();
+    const { mutateAsync, isPending } = useApiRegister();
 
     useEffect(() => {
         if (accessToken) {
@@ -38,28 +35,40 @@ export const LoginPage = ({}: LoginPageProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken]);
 
-    const handleSendMessageSuccess: SubmitHandler<LoginFormInput> = async (data) => {
+    const handleSendMessageSuccess: SubmitHandler<RegisterFormInput> = async (data) => {
         try {
-            const loginResponse = await mutateAsync({
+            if (data.password !== data.retypePassword) {
+                dispatch(
+                    pushErrorNotification({
+                        message: "Không thể đăng ký",
+                        description: "Mật khẩu không trùng khớp",
+                    })
+                );
+                return;
+            }
+
+            const RegisterResponse = await mutateAsync({
+                firstName: data.firstName,
+                lastName: data.lastName,
                 email: data.email,
                 password: data.password,
             });
 
-            dispatch(setAccessToken(loginResponse.accessToken));
+            dispatch(setAccessToken(RegisterResponse.accessToken));
         } catch (error: any) {
             dispatch(
                 pushErrorNotification({
-                    message: "Không thể đăng nhập",
+                    message: "Không thể đăng ký",
                     description: stringifyRequestError(error),
                 })
             );
         }
     };
 
-    const handleSendMessageError: SubmitErrorHandler<LoginFormInput> = (error) => {
+    const handleSendMessageError: SubmitErrorHandler<RegisterFormInput> = (error) => {
         dispatch(
             pushErrorNotification({
-                message: "Không thể đăng nhập",
+                message: "Không thể đăng ký",
                 description: stringifyFormError(error),
             })
         );
@@ -117,15 +126,38 @@ export const LoginPage = ({}: LoginPageProps) => {
                             }}
                         ></div>
                         <Heading size="3" style={{ marginTop: "3vh", marginBottom: "3vh" }}>
-                            Đăng nhập
+                            Đăng ký
                         </Heading>
 
                         <form onSubmit={handleSubmit(handleSendMessageSuccess, handleSendMessageError)}>
                             <Flex className="abc" direction="column" gap="3">
                                 <div className="xyz" style={{ color: "#667085", padding: "1.2vh 1vw", border: "1px solid #667085", borderRadius: "5px" }}>
+                                    <Icon ri="ri-text" style={{ marginRight: "1vw" }} />
+                                    <input
+                                        placeholder="Tên"
+                                        style={{ border: "none", outline: "none" }}
+                                        {...register("firstName", {
+                                            validate: {
+                                                required: (value) => value.trim().length > 0 || "Vui lòng nhập tên",
+                                            },
+                                        })}
+                                    />
+                                </div>
+                                <div className="xyz" style={{ color: "#667085", padding: "1.2vh 1vw", border: "1px solid #667085", borderRadius: "5px" }}>
+                                    <Icon ri="ri-text" style={{ marginRight: "1vw" }} />
+                                    <input
+                                        placeholder="Họ"
+                                        style={{ border: "none", outline: "none" }}
+                                        {...register("lastName", {
+                                            validate: {
+                                                required: (value) => value.trim().length > 0 || "Vui lòng nhập họ",
+                                            },
+                                        })}
+                                    />
+                                </div>
+                                <div className="xyz" style={{ color: "#667085", padding: "1.2vh 1vw", border: "1px solid #667085", borderRadius: "5px" }}>
                                     <Icon ri="ri-mail-line" style={{ marginRight: "1vw" }} />
                                     <input
-                                        id="email"
                                         placeholder="Email"
                                         style={{ border: "none", outline: "none" }}
                                         {...register("email", {
@@ -140,7 +172,6 @@ export const LoginPage = ({}: LoginPageProps) => {
                                     <Icon ri="ri-key-2-line" style={{ marginRight: "1vw" }} />
                                     <input
                                         type={showPassword ? "password" : "text"}
-                                        id="password"
                                         placeholder="Mật khẩu"
                                         style={{ border: "none", outline: "none" }}
                                         {...register("password", {
@@ -151,16 +182,30 @@ export const LoginPage = ({}: LoginPageProps) => {
                                     />
                                     <Icon ri={showPassword ? "ri-eye-off-line" : "ri-eye-line"} onClick={togglePasswordVisibility} />
                                 </div>
+                                <div style={{ color: "#667085", padding: "1.2vh 1vw", border: "1px solid #667085", borderRadius: "5px" }}>
+                                    <Icon ri="ri-key-2-line" style={{ marginRight: "1vw" }} />
+                                    <input
+                                        type={showPassword ? "password" : "text"}
+                                        placeholder="Nhập lại mật khẩu"
+                                        style={{ border: "none", outline: "none" }}
+                                        {...register("retypePassword", {
+                                            validate: {
+                                                required: (value) => value.trim().length > 0 || "Vui lòng nhập lại mật khẩu",
+                                            },
+                                        })}
+                                    />
+                                    <Icon ri={showPassword ? "ri-eye-off-line" : "ri-eye-line"} onClick={togglePasswordVisibility} />
+                                </div>
                                 <Button type="submit" mt="3" style={{ width: "100%", cursor: "pointer" }} loading={isPending}>
-                                    Đăng nhập ngay!
+                                    Đăng ký ngay!
                                 </Button>
                             </Flex>
                         </form>
                         <Flex gap="5">
-                            <Text style={{ color: "#667085", cursor: "pointer" }}>Chưa có tài khoản?</Text>
-                            <Link to="/register" style={{ textDecoration: "none" }}>
+                            <Text style={{ color: "#667085", cursor: "pointer" }}>Đã có tài khoản?</Text>
+                            <Link to="/login" style={{ textDecoration: "none" }}>
                                 <Text color="green" style={{ cursor: "pointer" }}>
-                                    Đăng ký ngay
+                                    Đăng nhập ngay!
                                 </Text>
                             </Link>
                         </Flex>
@@ -173,4 +218,4 @@ export const LoginPage = ({}: LoginPageProps) => {
 };
 
 // Using for lazy loading page
-export default LoginPage;
+export default RegisterPage;
