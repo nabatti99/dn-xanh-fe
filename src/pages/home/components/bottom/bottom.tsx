@@ -1,15 +1,16 @@
+import { useApiGetSmartRecycleBin } from "@api/http-request/requests/api-server/hooks/smart-recycle-bin/use-api-get-smart-recycle-bin";
+import { WasteType } from "@api/http-request/requests/api-server/models/smart-recycle-bin";
+import { Icon } from "@components";
 import { Button, Flex, Text } from "@radix-ui/themes";
-import { BottomProps } from "./type";
+import { pushErrorNotification } from "@services/notification";
+import { useAppDispatch, useAppSelector } from "@store";
+import { stringifyRequestError } from "@utilities";
+import { useEffect } from "react";
 import inorganicTrash from "./images/trash/inorganicTrash.png";
 import organicTrash from "./images/trash/organicTrash.png";
-import recycledTrash from "./images/trash/recycledTrash.png";
 import realTrashDemo from "./images/trash/realTrashDemo.png";
-import style from "./style.module.scss";
-import { Icon } from "@components";
-import { useEffect, useState } from "react";
-import { useApiGetSmartRecycleBin } from "@api/http-request/requests/api-server/hooks/smart-recycle-bin/use-api-get-smart-recycle-bin";
-import { useAppDispatch, useAppSelector } from "@store";
-import { WasteType } from "@api/http-request/requests/api-server/models/smart-recycle-bin";
+import recycledTrash from "./images/trash/recycledTrash.png";
+import { BottomProps } from "./type";
 
 export const Bottom = ({ ...props }: BottomProps) => {
     const dispatch = useAppDispatch();
@@ -21,17 +22,18 @@ export const Bottom = ({ ...props }: BottomProps) => {
         if (currentRecycleBinId) {
             mutateAsync({
                 id: currentRecycleBinId,
+            }).catch((error) => {
+                dispatch(
+                    pushErrorNotification({
+                        message: "Không thể lấy dữ liệu thùng rác thông minh",
+                        description: stringifyRequestError(error),
+                    })
+                );
             });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRecycleBinId]);
-
-    const [index, setIndex] = useState(1);
-
-    const changeIndex = (index: number) => {
-        setIndex(index);
-    };
 
     const physicalRecycleBinStyleMap: Record<WasteType, any> = {
         [WasteType.RECYCLABLE]: {

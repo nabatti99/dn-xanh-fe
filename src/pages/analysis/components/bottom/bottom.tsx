@@ -1,9 +1,8 @@
 import { Flex, Text } from "@radix-ui/themes";
-import { BottomProps } from "./type";
 import inorganicTrash from "./images/trash/inorganicTrash.png";
 import organicTrash from "./images/trash/organicTrash.png";
 import recycledTrash from "./images/trash/recycledTrash.png";
-import style from "./style.module.scss";
+import { BottomProps } from "./type";
 
 export const Bottom = ({ ...props }: BottomProps) => {
     return (

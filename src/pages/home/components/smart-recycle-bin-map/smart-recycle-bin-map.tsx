@@ -2,15 +2,15 @@ import { Icon } from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { SmartRecycleBinProps } from "./type";
 
+import { useApiGetAllSmartRecycleBin } from "@api/http-request/requests/api-server/hooks/smart-recycle-bin/use-api-get-all-smart-recycle-bin";
+import { setCurrentRecycleBinId } from "@pages/home/redux";
+import { Text } from "@radix-ui/themes";
+import { pushErrorNotification } from "@services/notification";
+import { useAppDispatch } from "@store";
+import { stringifyRequestError } from "@utilities";
+import { useEffect } from "react";
 import SmartTrashMarkerBgPng from "./images/smart-trash-marker-bg.png";
 import SmartTrashMarkerPng from "./images/smart-trash-marker.png";
-import { useApiGetAllSmartRecycleBin } from "@api/http-request/requests/api-server/hooks/smart-recycle-bin/use-api-get-all-smart-recycle-bin";
-import { useEffect } from "react";
-import { useAppDispatch } from "@store";
-import { pushErrorNotification } from "@services/notification";
-import { stringifyRequestError } from "@utilities";
-import { Text } from "@radix-ui/themes";
-import { setCurrentRecycleBinId } from "@pages/home/redux";
 
 export const SmartRecycleBinMap = ({ ...props }: SmartRecycleBinProps) => {
     const dispatch = useAppDispatch();
@@ -30,6 +30,8 @@ export const SmartRecycleBinMap = ({ ...props }: SmartRecycleBinProps) => {
                     })
                 );
             });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -1,9 +1,8 @@
-import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { ViewProps } from "./type";
 
-import style from "./style.module.scss";
-import Start from "./images/star.png";
 import { useAppSelector } from "@store";
+import Start from "./images/star.png";
 
 export const View = ({ ...props }: ViewProps) => {
     const { user } = useAppSelector((state) => state.globalStates);

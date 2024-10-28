@@ -1,7 +1,6 @@
+import { Icon } from "@components";
 import { Flex, Text } from "@radix-ui/themes";
 import { HeadProps } from "./type";
-import style from "./style.module.scss";
-import { Icon } from "@components";
 
 export const Head = ({ ...props }: HeadProps) => {
     return (

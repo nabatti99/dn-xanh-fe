@@ -1,7 +1,6 @@
-import { Button, Flex, Heading, Text } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import { ControlProps } from "./type";
 
-import style from "./style.module.scss";
 import { Icon } from "@components";
 
 export const Control = ({ ...props }: ControlProps) => {

@@ -1,20 +1,20 @@
-import { Seo } from "@global/components";
-import { Box, Button, Flex, Heading, Text } from "@radix-ui/themes";
-import { ClaimRewardPageProps } from "./type";
-import { Link, useSearchParams } from "react-router-dom";
-import { Image } from "@components";
 import { useApiClaimReward } from "@api/http-request/requests/api-server/hooks/smart-recycle-bin/use-api-claim-reward";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@store";
+import { Image } from "@components";
+import { Seo } from "@global/components";
+import { Box, Button, Flex, Heading } from "@radix-ui/themes";
 import { pushErrorNotification } from "@services/notification";
+import { useAppDispatch, useAppSelector } from "@store";
 import { stringifyRequestError } from "@utilities";
 import cls from "classnames";
+import { useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ClaimRewardPageProps } from "./type";
 
 import styles from "./styles.module.scss";
 
 export const ClaimRewardPage = ({}: ClaimRewardPageProps) => {
     const dispatch = useAppDispatch();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const { user } = useAppSelector((state) => state.globalStates);
 
     const { mutateAsync, data: apiResponse, error, isPending } = useApiClaimReward();
