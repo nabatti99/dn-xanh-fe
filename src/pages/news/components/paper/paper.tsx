@@ -7,26 +7,46 @@ import Image4 from "./images/decors/image4.png";
 import Image5 from "./images/decors/image5.png";
 import Image6 from "./images/decors/image6.png";
 import { PaperProps } from "./type";
+import { useResponsive } from "@services/responsive";
 
 export const Paper = ({ ...props }: PaperProps) => {
+    const responsive = useResponsive({
+        initial: {
+            containerMargin: "0 32px",
+            paperWidth: "100%",
+            titleSize: "2",
+            dateSize: "1",
+        },
+        md: {
+            containerMargin: "0 80px",
+            paperWidth: "320px",
+            titleSize: "4",
+            dateSize: "2",
+        },
+    });
+
     return (
-        <Flex direction="column" align="center" justify="between" wrap="wrap" gap="5" style={{ maxHeight: "100vh", overflowY: "auto" }} {...props}>
-            {PaperItems.map((item, index) => (
-                <Flex
-                    key={index}
-                    direction="column"
-                    style={{ width: "20vw", background: "white", cursor: "pointer", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
-                >
-                    <img src={item.image} alt={item.title} style={{ borderRadius: "10px 10px 0 0" }} /> {/* Hiển thị ảnh */}
-                    <Flex direction="column" style={{ padding: "0.5rem" }}>
-                        <Text size="4">{item.title}</Text>
-                        <Text size="2">
-                            <Icon ri="ri-calendar-line" style={{ marginRight: "0.5rem" }} />
-                            <span>{item.nonce}</span>
-                        </Text>
+        <Flex flexGrow="1" direction="column">
+            <Flex wrap="wrap" align="start" gap="5" style={{ overflowY: "auto", margin: responsive["containerMargin"] }} {...props}>
+                {PaperItems.map((item, index) => (
+                    <Flex
+                        key={index}
+                        direction="column"
+                        style={{ width: responsive["paperWidth"], background: "white", cursor: "pointer", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
+                    >
+                        <img src={item.image} alt={item.title} style={{ borderRadius: "10px 10px 0 0" }} /> {/* Hiển thị ảnh */}
+                        <Flex flexGrow="1" direction="column" gap="3" style={{ padding: "1rem" }}>
+                            <Flex flexGrow="1" direction="column">
+                                <Text size={responsive["titleSize"]}>{item.title}</Text>
+                            </Flex>
+                            <Text size={responsive["dateSize"]}>
+                                <Icon ri="ri-calendar-line" style={{ marginRight: "1rem" }} />
+                                <span>{item.nonce}</span>
+                            </Text>
+                        </Flex>
                     </Flex>
-                </Flex>
-            ))}
+                ))}
+            </Flex>
         </Flex>
     );
 };

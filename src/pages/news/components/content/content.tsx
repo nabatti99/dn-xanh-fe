@@ -1,8 +1,20 @@
 import { Box, Flex, Text } from "@radix-ui/themes";
 import DemoPic from "./images/DragonBridge.png";
 import { ContentProps } from "./type";
+import { useResponsive } from "@services/responsive";
 
 export const Content = ({ ...props }: ContentProps) => {
+    const responsive = useResponsive({
+        initial: {
+            titleSize: "2",
+            descriptionSize: "1",
+        },
+        md: {
+            titleSize: "4",
+            descriptionSize: "4",
+        },
+    });
+
     return (
         <>
             <Flex align="center" style={{ margin: "1vh 10vw" }}>
@@ -10,15 +22,15 @@ export const Content = ({ ...props }: ContentProps) => {
 
                 <Flex direction="column">
                     {contentItems.map((item, index) => (
-                        <Flex height="20vh" width="55vw" overflow="hidden" style={{ marginLeft: "10vw", zIndex: 1, marginTop: "5vh", cursor: "pointer" }}>
+                        <Flex overflow="hidden" style={{ marginLeft: "10vw", zIndex: 1, marginTop: "5vh", cursor: "pointer" }}>
                             <Flex
                                 overflow="hidden"
                                 align="center"
                                 justify="center"
                                 p="3"
                                 style={{
-                                    height: "100%",
-                                    width: "15vw",
+                                    height: "240px",
+                                    width: "240px",
                                     background: "white",
                                     border: "2px solid var(--green-7)",
                                     borderRadius: "10px",
@@ -30,7 +42,7 @@ export const Content = ({ ...props }: ContentProps) => {
                                     color: "var(--green-9)",
                                 }}
                             >
-                                <Text size="4">{item.title}</Text>
+                                <Text size={responsive["titleSize"]}>{item.title}</Text>
                             </Flex>
                             <Box
                                 style={{
@@ -39,7 +51,7 @@ export const Content = ({ ...props }: ContentProps) => {
                                     paddingRight: "1vw",
                                 }}
                             >
-                                <Text size="4" style={{ textAlign: "justify" }}>
+                                <Text size={responsive["descriptionSize"]} style={{ textAlign: "justify" }}>
                                     <p style={{ padding: "10px", margin: "0" }}>{item.nonce}</p>
                                 </Text>
                             </Box>

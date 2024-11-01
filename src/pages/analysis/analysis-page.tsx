@@ -7,11 +7,21 @@ import { Landfill } from "./components/landfill";
 import { Point } from "./components/point";
 import { SortedWaste } from "./components/sortedWaste";
 import { AnalysisPageProps } from "./type";
+import { useResponsive } from "@services/responsive";
 
 export const AnalysisPage = ({}: AnalysisPageProps) => {
     useEffect(() => window.scrollTo({ behavior: "smooth", top: 0 }));
 
     const [index, setIndex] = useState(1);
+
+    const responsive = useResponsive({
+        initial: {
+            shouldShowChart: false,
+        },
+        md: {
+            shouldShowChart: true,
+        },
+    });
 
     const changeIndex = (index: number) => {
         setIndex(index);
@@ -27,40 +37,42 @@ export const AnalysisPage = ({}: AnalysisPageProps) => {
                         </Text>
                     </Flex>
                     <Flex direction="column">
-                        <Flex gap="5">
+                        <Flex gap="5" justify="center">
                             <Flex direction="column" gap="6">
                                 <SortedWaste
-                                    width="17vw"
-                                    height="17vh"
+                                    width="200px"
+                                    height="200px"
                                     onClick={() => {
                                         changeIndex(1);
                                     }}
                                     tabIndex={index}
                                 />
                                 <Landfill
-                                    width="17vw"
-                                    height="17vh"
+                                    width="200px"
+                                    height="200px"
                                     onClick={() => {
                                         changeIndex(2);
                                     }}
                                     tabIndex={index}
                                 />
                                 <Point
-                                    width="17vw"
-                                    height="17vh"
+                                    width="200px"
+                                    height="200px"
                                     onClick={() => {
                                         changeIndex(3);
                                     }}
                                     tabIndex={index}
                                 />
                             </Flex>
-                            <Flex style={{ justifyContent: "right" }}>
-                                <Chart tabIndex={index} />
-                            </Flex>
+                            {responsive.shouldShowChart && (
+                                <Flex flexGrow="1" style={{ justifyContent: "right" }}>
+                                    <Chart tabIndex={index} />
+                                </Flex>
+                            )}
                         </Flex>
                         <Bottom />
                     </Flex>
-                    <Text size="2" weight="bold" color="green">
+                    <Text size="2" weight="bold" color="green" mb="5">
                         Số liệu được tổng hợp trong 30 ngày qua
                     </Text>
                 </Flex>
