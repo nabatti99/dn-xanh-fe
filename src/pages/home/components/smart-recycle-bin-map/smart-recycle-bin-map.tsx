@@ -10,7 +10,9 @@ import { useAppDispatch } from "@store";
 import { stringifyRequestError } from "@utilities";
 import { useEffect } from "react";
 import SmartTrashMarkerBgPng from "./images/smart-trash-marker-bg.png";
-import SmartTrashMarkerPng from "./images/smart-trash-marker.png";
+// import SmartTrashMarkerPng from "./images/smart-trash-marker.png";
+// import NewSmartTrashMarkerPng from "./images/new-marker-map.png";
+import LogoSmartTrashMarkerPng from "./images/logoDNxanhDemo.png";
 
 export const SmartRecycleBinMap = ({ ...props }: SmartRecycleBinProps) => {
     const dispatch = useAppDispatch();
@@ -47,7 +49,7 @@ export const SmartRecycleBinMap = ({ ...props }: SmartRecycleBinProps) => {
                         position={[smartRecycleBin.locationLatitude, smartRecycleBin.locationLongitude]}
                         icon={
                             new Icon({
-                                iconUrl: SmartTrashMarkerPng,
+                                iconUrl: LogoSmartTrashMarkerPng,
                                 shadowUrl: SmartTrashMarkerBgPng,
                                 iconSize: [40, 40],
                                 shadowSize: [72, 72],

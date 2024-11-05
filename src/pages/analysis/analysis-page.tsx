@@ -29,7 +29,7 @@ export const AnalysisPage = ({}: AnalysisPageProps) => {
 
     return (
         <>
-            <Flex direction="column" align="stretch" height="100vh" style={{ background: "linear-gradient(to right, #f0fff4, #ffffff)" }}>
+            <Flex direction="column" align="stretch" style={{ minHeight: "100vh", background: "linear-gradient(to right, #f0fff4, #ffffff)" }}>
                 <Flex direction="column" align="center" style={{ margin: "3vh 7.9vw" }}>
                     <Flex justify="center" align="center" style={{ marginTop: "2vh", marginBottom: "1vh" }}>
                         <Text size="8">
@@ -38,10 +38,10 @@ export const AnalysisPage = ({}: AnalysisPageProps) => {
                     </Flex>
                     <Flex direction="column">
                         <Flex gap="5" justify="center">
-                            <Flex direction="column" gap="6">
+                            <Flex direction="column" gap="5">
                                 <SortedWaste
                                     width="200px"
-                                    height="200px"
+                                    height="150px"
                                     onClick={() => {
                                         changeIndex(1);
                                     }}
@@ -49,7 +49,7 @@ export const AnalysisPage = ({}: AnalysisPageProps) => {
                                 />
                                 <Landfill
                                     width="200px"
-                                    height="200px"
+                                    height="150px"
                                     onClick={() => {
                                         changeIndex(2);
                                     }}
@@ -57,7 +57,7 @@ export const AnalysisPage = ({}: AnalysisPageProps) => {
                                 />
                                 <Point
                                     width="200px"
-                                    height="200px"
+                                    height="150px"
                                     onClick={() => {
                                         changeIndex(3);
                                     }}
