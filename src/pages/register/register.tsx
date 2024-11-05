@@ -1,17 +1,17 @@
+import { useApiRegister } from "@api/http-request/requests/api-server/hooks/user";
 import { Icon } from "@components";
 import { Seo } from "@global/components";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
+import { setAccessToken } from "@services/cookie";
 import { pushErrorNotification } from "@services/notification";
 import { useAppDispatch, useAppSelector } from "@store";
 import { stringifyFormError, stringifyRequestError } from "@utilities";
 import { useEffect, useState } from "react";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import BannerImage from "./images/bgDragon.png";
 import Logo from "./images/logo/logoDNxanhDemo.jpg";
-import { setAccessToken } from "@services/cookie";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RegisterFormInput, RegisterPageProps } from "./type";
-import { useApiRegister } from "@api/http-request/requests/api-server/hooks/user";
 
 export const RegisterPage = ({}: RegisterPageProps) => {
     const dispatch = useAppDispatch();

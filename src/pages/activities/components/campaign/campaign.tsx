@@ -7,8 +7,18 @@ import Campaign4 from "./images/campaign4.png";
 import Campaign5 from "./images/campaign5.png";
 import Campaign6 from "./images/campaign6.png";
 import { CampaignProps } from "./type";
+import { useResponsive } from "@services/responsive";
 
 export const Campaign = ({ ...props }: CampaignProps) => {
+    const responsive = useResponsive({
+        initial: {
+            width: "80%",
+        },
+        md: {
+            width: "31%",
+        },
+    });
+
     return (
         <Flex direction="column" align="stretch" gap="8" p="4" style={{ width: "100%" }} {...props}>
             <Flex direction="column" align="start" justify="start" gap="5" style={{ width: "100%" }}>
@@ -17,15 +27,14 @@ export const Campaign = ({ ...props }: CampaignProps) => {
                     Cùng tham gia bảo vệ môi trường với chúng tôi
                 </Text>
             </Flex>
-            <Flex wrap="wrap" align="start" justify="between" gap="5">
+            <Flex wrap="wrap" align="center" justify="between" gap="5">
                 {CampaignItems.map((item, index) => (
                     <Flex
                         key={index}
                         direction="column"
                         gap="3"
                         style={{
-                            width: "31%",
-
+                            width: responsive.width,
                             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                             borderRadius: "1vw",
                             backgroundColor: "#fff",
