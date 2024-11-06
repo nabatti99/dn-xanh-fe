@@ -1,9 +1,7 @@
+import { Image } from "@components";
 import { Flex } from "@radix-ui/themes";
 import ChartDemo from "./images/Chart.png";
 import { ChartProps } from "./type";
-import { Image } from "@components";
-
-import styles from "./style.module.scss";
 
 export const Chart = ({ tabIndex, ...props }: ChartProps) => {
     return (
