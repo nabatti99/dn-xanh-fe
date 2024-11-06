@@ -22,42 +22,40 @@ export const Content = ({ ...props }: ContentProps) => {
 
                 <Flex direction="column">
                     {contentItems.map((item, index) => (
-                        <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit", zIndex: 1 }}>
-                            <Flex overflow="hidden" style={{ marginLeft: "10vw", marginTop: "5vh", cursor: "pointer" }}>
-                                <Flex
-                                    overflow="hidden"
-                                    align="center"
-                                    justify="center"
-                                    p="3"
-                                    style={{
-                                        height: "auto",
-                                        width: "240px",
-                                        background: "white",
-                                        border: "2px solid var(--green-7)",
-                                        borderRadius: "10px",
-                                        wordWrap: "break-word",
-                                        whiteSpace: "normal",
-                                        fontSize: "1.5rem",
-                                        fontWeight: "bold",
-                                        textAlign: "center",
-                                        color: "var(--green-9)",
-                                    }}
-                                >
-                                    <Text size={responsive["titleSize"]}>{item.title}</Text>
-                                </Flex>
-                                <Box
-                                    style={{
-                                        width: "80%",
-                                        paddingLeft: "2vw",
-                                        paddingRight: "1vw",
-                                    }}
-                                >
-                                    <Text size={responsive["descriptionSize"]} style={{ textAlign: "justify" }}>
-                                        <p style={{ padding: "10px", margin: "0" }}>{item.nonce}</p>
-                                    </Text>
-                                </Box>
+                        <Flex overflow="hidden" style={{ marginLeft: "10vw", marginTop: "5vh", cursor: "pointer", zIndex: 1 }} onClick={() => window.open(item.link, "_blank")}>
+                            <Flex
+                                overflow="hidden"
+                                align="center"
+                                justify="center"
+                                p="3"
+                                style={{
+                                    height: "auto",
+                                    width: "240px",
+                                    background: "white",
+                                    border: "2px solid var(--green-7)",
+                                    borderRadius: "10px",
+                                    wordWrap: "break-word",
+                                    whiteSpace: "normal",
+                                    fontSize: "1.5rem",
+                                    fontWeight: "bold",
+                                    textAlign: "center",
+                                    color: "var(--green-9)",
+                                }}
+                            >
+                                <Text size={responsive["titleSize"]}>{item.title}</Text>
                             </Flex>
-                        </a>
+                            <Box
+                                style={{
+                                    width: "80%",
+                                    paddingLeft: "2vw",
+                                    paddingRight: "1vw",
+                                }}
+                            >
+                                <Text size={responsive["descriptionSize"]} style={{ textAlign: "justify" }}>
+                                    <p style={{ padding: "10px", margin: "0" }}>{item.nonce}</p>
+                                </Text>
+                            </Box>
+                        </Flex>
                     ))}
                 </Flex>
             </Flex>

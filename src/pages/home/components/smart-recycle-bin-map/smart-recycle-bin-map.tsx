@@ -37,7 +37,7 @@ export const SmartRecycleBinMap = ({ ...props }: SmartRecycleBinProps) => {
     }, []);
 
     return (
-        <MapContainer center={[16.06, -251.84]} zoom={16} scrollWheelZoom={true} zoomControl={false}>
+        <MapContainer center={[16.071192, 108.220053]} zoom={16} scrollWheelZoom={true} zoomControl={false}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

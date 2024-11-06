@@ -9,49 +9,48 @@ export const Volunteer = ({ ...props }: VolunteerProps) => {
     return (
         <Flex direction="column" align="center" gap="5" style={{ width: "100%", maxWidth: "800px", margin: "0 auto" }}>
             {VolunteerItems.map((item, index) => (
-                <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit", zIndex: 1 }}>
-                    <Flex
-                        overflow="hidden"
-                        key={index}
+                <Flex
+                    overflow="hidden"
+                    key={index}
+                    style={{
+                        display: "flex",
+                        backgroundColor: "white",
+                        borderRadius: "10px",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                        overflow: "hidden",
+                        marginBottom: "1rem",
+                        // borderLeft: "5px solid #a0e7e5",
+                        cursor: "pointer",
+                        alignItems: "center", // Center-aligns content vertically
+                    }}
+                    onClick={() => window.open(item.link, "_blank")}
+                >
+                    <img
+                        src={item.image}
+                        alt={item.title}
                         style={{
-                            display: "flex",
-                            backgroundColor: "white",
-                            borderRadius: "10px",
-                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                            overflow: "hidden",
-                            marginBottom: "1rem",
-                            // borderLeft: "5px solid #a0e7e5",
-                            cursor: "pointer",
-                            alignItems: "center", // Center-aligns content vertically
+                            height: "100%",
+                            borderRadius: " 0 10vw 0 0",
+                            borderRight: "5px solid #a0e7e5",
+                            objectFit: "contain",
+                            flexShrink: 0, // Prevents the image from shrinking
                         }}
-                    >
-                        <img
-                            src={item.image}
-                            alt={item.title}
-                            style={{
-                                height: "100%",
-                                borderRadius: " 0 10vw 0 0",
-                                borderRight: "5px solid #a0e7e5",
-                                objectFit: "contain",
-                                flexShrink: 0, // Prevents the image from shrinking
-                            }}
-                        />
-                        <Flex direction="column" overflow="hidden" style={{ padding: "1rem", justifyContent: "space-between", flex: 1 }}>
-                            <Text size="4" weight="bold" style={{ fontSize: "1.25rem", fontWeight: "700", color: "#333", marginBottom: "0.5rem" }}>
-                                {item.title}
+                    />
+                    <Flex direction="column" overflow="hidden" style={{ padding: "1rem", justifyContent: "space-between", flex: 1 }}>
+                        <Text size="4" weight="bold" style={{ fontSize: "1.25rem", fontWeight: "700", color: "#333", marginBottom: "0.5rem" }}>
+                            {item.title}
+                        </Text>
+                        <Text size="2" style={{ fontSize: "1rem", color: "#555", marginBottom: "1rem" }}>
+                            {item.content}
+                        </Text>
+                        <Flex align="center" gap="2" style={{ display: "flex", alignItems: "center", color: "#777" }}>
+                            <Icon ri="ri-calendar-line" />
+                            <Text size="2" style={{ fontSize: "0.875rem", color: "#777" }}>
+                                {item.date}
                             </Text>
-                            <Text size="2" style={{ fontSize: "1rem", color: "#555", marginBottom: "1rem" }}>
-                                {item.content}
-                            </Text>
-                            <Flex align="center" gap="2" style={{ display: "flex", alignItems: "center", color: "#777" }}>
-                                <Icon ri="ri-calendar-line" />
-                                <Text size="2" style={{ fontSize: "0.875rem", color: "#777" }}>
-                                    {item.date}
-                                </Text>
-                            </Flex>
                         </Flex>
                     </Flex>
-                </a>
+                </Flex>
             ))}
         </Flex>
     );

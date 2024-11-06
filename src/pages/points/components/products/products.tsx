@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from "@radix-ui/themes";
+import { Button, Dialog, Flex, Text, TextArea, TextField } from "@radix-ui/themes";
 import { ProductsProps } from "./type";
 import { Icon } from "@components";
 import Image1 from "./images/image1.png";
@@ -48,7 +48,59 @@ export const Products = ({ ...props }: ProductsProps) => {
                                     <span>{item.point}</span>
                                 </Text>
                             </Flex>
-                            <Button>Đổi thưởng!</Button>
+                            <form action="#">
+                                <Dialog.Root>
+                                    <Dialog.Trigger>
+                                        <Button>Đổi thưởng</Button>
+                                    </Dialog.Trigger>
+
+                                    <Dialog.Content maxWidth="450px">
+                                        <Dialog.Title>{item.title}</Dialog.Title>
+                                        <Dialog.Description size="2" mb="4">
+                                            Hãy tích cực thu thấp điểm xanh nhé!
+                                        </Dialog.Description>
+
+                                        <Flex direction="column" gap="3">
+                                            <label>
+                                                <Text as="div" size="2" mb="1" weight="bold">
+                                                    Số điện thoại
+                                                </Text>
+                                                <TextField.Root type="tel" placeholder="Nhập số điện thoại" required />
+                                            </label>
+                                            <label>
+                                                <Text as="div" size="2" mb="1" weight="bold">
+                                                    Địa chỉ nhận hàng
+                                                </Text>
+                                                <TextField.Root type="text" placeholder="Nhập địa chỉ" required />
+                                            </label>
+                                            <label>
+                                                <Text as="div" size="2" mb="1" weight="bold">
+                                                    Ghi chú
+                                                </Text>
+                                                <TextArea placeholder="Ghi chú" />
+                                            </label>
+                                            <Dialog.Description size="2" mb="4">
+                                                Xác nhận đổi{" "}
+                                                <Text weight="bold" color="green">
+                                                    {item.point}
+                                                </Text>{" "}
+                                                điểm!
+                                            </Dialog.Description>
+                                        </Flex>
+
+                                        <Flex gap="3" mt="4" justify="end">
+                                            <Dialog.Close>
+                                                <Button variant="soft" color="gray">
+                                                    Huỷ
+                                                </Button>
+                                            </Dialog.Close>
+                                            <Dialog.Close>
+                                                <Button type="submit">Đổi</Button>
+                                            </Dialog.Close>
+                                        </Flex>
+                                    </Dialog.Content>
+                                </Dialog.Root>
+                            </form>
                         </Flex>
                     </Flex>
                 </Flex>

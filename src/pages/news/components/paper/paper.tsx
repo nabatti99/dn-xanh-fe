@@ -29,24 +29,23 @@ export const Paper = ({ ...props }: PaperProps) => {
         <Flex flexGrow="1" direction="column">
             <Flex wrap="wrap" align="start" gap="5" style={{ overflowY: "auto", margin: responsive["containerMargin"] }} {...props}>
                 {PaperItems.map((item, index) => (
-                    <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
-                        <Flex
-                            key={index}
-                            direction="column"
-                            style={{ width: responsive["paperWidth"], background: "white", cursor: "pointer", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
-                        >
-                            <img src={item.image} alt={item.title} style={{ borderRadius: "10px 10px 0 0" }} /> {/* Hiển thị ảnh */}
-                            <Flex flexGrow="1" direction="column" gap="3" style={{ padding: "1rem" }}>
-                                <Flex flexGrow="1" direction="column">
-                                    <Text size={responsive["titleSize"]}>{item.title}</Text>
-                                </Flex>
-                                <Text size={responsive["dateSize"]}>
-                                    <Icon ri="ri-calendar-line" style={{ marginRight: "1rem" }} />
-                                    <span>{item.nonce}</span>
-                                </Text>
+                    <Flex
+                        key={index}
+                        direction="column"
+                        style={{ width: responsive["paperWidth"], background: "white", cursor: "pointer", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
+                        onClick={() => window.open(item.link, "_blank")}
+                    >
+                        <img src={item.image} alt={item.title} style={{ borderRadius: "10px 10px 0 0" }} /> {/* Hiển thị ảnh */}
+                        <Flex flexGrow="1" direction="column" gap="3" style={{ padding: "1rem" }}>
+                            <Flex flexGrow="1" direction="column">
+                                <Text size={responsive["titleSize"]}>{item.title}</Text>
                             </Flex>
+                            <Text size={responsive["dateSize"]}>
+                                <Icon ri="ri-calendar-line" style={{ marginRight: "1rem" }} />
+                                <span>{item.nonce}</span>
+                            </Text>
                         </Flex>
-                    </a>
+                    </Flex>
                 ))}
             </Flex>
         </Flex>
