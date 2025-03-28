@@ -13,16 +13,33 @@ import recycledTrash from "./images/trash/recycledTrash.png";
 import { BottomProps } from "./type";
 import { useResponsive } from "@services/responsive";
 
+const getSmallerSize = (baseSize: string): "1" | "2" => {
+    const sizeNum = Number(baseSize) - 1;
+    return (sizeNum >= 1 ? String(sizeNum) : "1") as "1" | "2";
+};
+
 export const Bottom = ({ ...props }: BottomProps) => {
     const dispatch = useAppDispatch();
     const { currentRecycleBinId } = useAppSelector((state) => state.home);
 
     const responsive = useResponsive({
         initial: {
-            imageWidth: "100px",
+            imageWidth: "80px", 
+            imageSize: "40px", 
+            padding: "10px",
+            fontSize: "2",
+            flexDirection: "column", 
+            containerWidth: "90vw", 
+            gap: "3",
         },
         md: {
-            imageWidth: "unset",
+            imageWidth: "unset", 
+            imageSize: "60px", 
+            padding: "20px",
+            fontSize: "3",
+            flexDirection: "row", 
+            containerWidth: "69vw", 
+            gap: "5",
         },
     });
 
@@ -63,8 +80,11 @@ export const Bottom = ({ ...props }: BottomProps) => {
     console.log(smartRecycleBin);
 
     return (
-        <Flex direction="column" position="absolute" width="69vw" style={{ margin: "0 auto", left: "50%", bottom: "24px", transform: "translateX(-50%)" }}>
-            <Flex justify="between" align="end" gap="5" style={{ marginBottom: "10px" }}>
+        <Flex direction="column" position="absolute" 
+        width={responsive["containerWidth"]} style={{ margin: "0 auto", left: "50%", bottom: "24px", transform: "translateX(-50%)" }}>
+            <Flex justify="between" align="end" gap={responsive["gap"]} 
+            direction={responsive["flexDirection"] === "column" ? "column" : "row"}
+            style={{ marginBottom: "10px" }}>
                 <Button style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
                     <Icon ri="ri-corner-up-right-line"></Icon> Dẫn đường
                 </Button>
@@ -81,7 +101,7 @@ export const Bottom = ({ ...props }: BottomProps) => {
                 gap="3"
                 {...props}
                 style={{
-                    padding: "20px",
+                    padding: responsive["padding"],
                     backgroundColor: "white",
                     borderRadius: "10px",
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
@@ -102,36 +122,43 @@ export const Bottom = ({ ...props }: BottomProps) => {
                     </Flex>
                 </Flex>
                 <div style={{ border: "1px solid silver", margin: "0 10px" }}></div> */}
-                <Flex gap="5" style={{ padding: "10px", justifyContent: "space-around" }}>
+                <Flex gap={responsive["gap"]}
+                direction={responsive["flexDirection"]}
+                align={responsive["flexDirection"] === "column" ? "center" : "stretch"}
+                style={{ padding: responsive["padding"], justifyContent: responsive["flexDirection"] === "row" ? "space-around" : "center" }}>
                     {smartRecycleBin &&
                         smartRecycleBin.physicalRecycleBins.map((physicalRecycleBin) => (
                             <Flex direction="column" key={physicalRecycleBin.id}>
                                 <Flex>
                                     <img
-                                        width="60px"
-                                        height="60px"
+                                        width={responsive["imageSize"]} 
+                                        height={responsive["imageSize"]}
                                         alt={physicalRecycleBinStyleMap[physicalRecycleBin.wasteType].text}
                                         src={physicalRecycleBinStyleMap[physicalRecycleBin.wasteType].imageSrc}
                                     />
                                     <Flex direction="column" align="stretch" justify="center" style={{ marginLeft: "10px" }}>
-                                        <Text size="3" style={{ fontWeight: "700" }}>
+                                        <Text size={responsive["fontSize"]} style={{ fontWeight: "700" }}>
                                             {physicalRecycleBinStyleMap[physicalRecycleBin.wasteType].text}
                                         </Text>
-                                        <Text size="2" color="green" style={{ fontWeight: "500" }}>
+                                        <Text
+                                            size={getSmallerSize(responsive["fontSize"])}
+                                            color="green"
+                                            style={{ fontWeight: "500" }}
+                                        >
                                             Đang chứa {((physicalRecycleBin.currentVolume / physicalRecycleBin.maxVolume) * 100).toFixed(0)}% rác
                                         </Text>
                                     </Flex>
                                 </Flex>
                                 <Flex direction="column" style={{ marginTop: "10px" }}>
                                     <div>
-                                        <Icon ri="ri-funds-line" size="1" color="green" style={{ marginRight: "5px" }} />
-                                        <Text size="1" style={{ fontWeight: "600" }}>
+                                        <Icon ri="ri-funds-line" size={responsive["fontSize"]} color="green" style={{ marginRight: "5px" }} />
+                                        <Text size={getSmallerSize(responsive["fontSize"])} style={{ fontWeight: "600" }}>
                                             Đã dọn: 1 tiếng trước
                                         </Text>
                                     </div>
                                     <div>
-                                        <Icon ri="ri-funds-line" size="1" color="green" style={{ marginRight: "5px" }} />
-                                        <Text size="1" style={{ fontWeight: "600" }}>
+                                        <Icon ri="ri-funds-line" size={responsive["fontSize"]} color="green" style={{ marginRight: "5px" }} />
+                                        <Text size={getSmallerSize(responsive["fontSize"])} style={{ fontWeight: "600" }}>
                                             Thêm rác: {new Date(physicalRecycleBin.updatedAt!).toLocaleTimeString()}
                                         </Text>
                                     </div>
