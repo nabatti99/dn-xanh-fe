@@ -31,6 +31,8 @@ export const Bottom = ({ ...props }: BottomProps) => {
             flexDirection: "column", 
             containerWidth: "90vw", 
             gap: "3",
+            itemWidth: "100%",
+            scrollBehavior: "auto",
         },
         md: {
             imageWidth: "unset", 
@@ -40,6 +42,8 @@ export const Bottom = ({ ...props }: BottomProps) => {
             flexDirection: "row", 
             containerWidth: "69vw", 
             gap: "5",
+            scrollBehavior: "hidden",
+            itemWidth: "auto",
         },
     });
 
@@ -123,12 +127,21 @@ export const Bottom = ({ ...props }: BottomProps) => {
                 </Flex>
                 <div style={{ border: "1px solid silver", margin: "0 10px" }}></div> */}
                 <Flex gap={responsive["gap"]}
-                direction={responsive["flexDirection"]}
-                align={responsive["flexDirection"] === "column" ? "center" : "stretch"}
-                style={{ padding: responsive["padding"], justifyContent: responsive["flexDirection"] === "row" ? "space-around" : "center" }}>
+                direction="row"
+                style={{
+                    padding: responsive["padding"],
+                    overflowX: responsive["scrollBehavior"], // Cuộn ngang trên màn nhỏ
+                    flexWrap: "nowrap", // Ngăn xuống dòng để vuốt ngang
+                    justifyContent: responsive["scrollBehavior"] === "hidden" ? "space-around" : "flex-start", // Căn đều trên màn lớn, căn trái khi cuộn
+                }}>
                     {smartRecycleBin &&
                         smartRecycleBin.physicalRecycleBins.map((physicalRecycleBin) => (
-                            <Flex direction="column" key={physicalRecycleBin.id}>
+                            <Flex direction="column" key={physicalRecycleBin.id}
+                            style={{
+                                width: responsive["itemWidth"], 
+                                flexShrink: 0, 
+                            }}
+                            >
                                 <Flex>
                                     <img
                                         width={responsive["imageSize"]} 
